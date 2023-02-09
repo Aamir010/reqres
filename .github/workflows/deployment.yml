@@ -17,16 +17,16 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-      id: extract_branch
+    # - name: Extract branch name
+    #   shell: bash
+    #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+    #   id: extract_branch
 
         
     
     - name: Echo Env
       run: |
-        echo "${{ steps.extract_branch.outputs.branch }}"
+        git branch
 
 
   test_on_merge:
