@@ -47,3 +47,12 @@ variable "common_tags" {
 variable "assume_role" {
   type = string
 }
+
+variable "autoscaling" {
+  type = object({
+    min_capacity       = number
+    max_capacity       = number
+    high_cpu_threshold = number
+    low_cpu_threshold  = number
+  })
+}
