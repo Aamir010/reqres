@@ -6,12 +6,17 @@ on:
     branches: [ "master" ]
     types: [opened, synchronize, closed]
 
+env:
+  AWS_REGION: "us-east-1"
+
 jobs:
   pre-req:
     name: Setting up pre-req
     runs-on: ubuntu-latest
     outputs:
       SECRET_ENV: ${{ steps.secret-env.outputs.SECRET_ENV }}
+      AWS_ACCESS_KEY: ${{ steps.secret-name.outputs.ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ steps.secret-name.outputs.SECRET_ACCESS_KEY }}
 
     steps:
 
@@ -23,6 +28,13 @@ jobs:
         else
             echo "SECRET_ENV=DEV" >> "$GITHUB_OUTPUT"
         fi
+
+    - name: Set SecretName
+      id: secret-name
+      run: |
+        echo "ACCESS_KEY=AWS_${{ steps.secret-env.outputs.SECRET_ENV }}_ACCESS_KEY" >> "$GITHUB_OUTPUT"
+        echo "SECRET_ACCESS_KEY=AWS_${{ steps.secret-env.outputs.SECRET_ENV }}_SECRET_ACCESS_KEY" >> "$GITHUB_OUTPUT"
+
 
   test:
     if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
@@ -37,13 +49,7 @@ jobs:
     
     - name: Echo Env
       run: |
-        echo ${{ needs.pre-req.outputs.SECRET_ENV }} 
-
-    - name: Run a multi-line script
-      env:
-        ENVIRONMENT: DEV
-      run: |
-        echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+        echo ${{ needs.pre-req.outputs.SECRET_ENV }}
 
       
 
