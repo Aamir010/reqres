@@ -19,6 +19,7 @@ jobs:
 
     - name: Set EnvVar for Secret
       run: |
+        echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
         if [[ $BRANCH == 'master' ]]; then
             echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
         else
