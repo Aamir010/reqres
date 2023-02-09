@@ -7,13 +7,10 @@ on:
     types: [opened, synchronize, closed]
 
 jobs:
-  test:
-    if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
-    name: Create Infra
+  pre-req:
+    name: Setting up pre-req
     runs-on: ubuntu-latest
-
     steps:
-
     - name: Check out code
       uses: actions/checkout@v2
 
@@ -24,6 +21,14 @@ jobs:
         else
             echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
         fi   
+        
+  test:
+    if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
+    needs: pre-req
+    name: Create Infra
+    runs-on: ubuntu-latest
+
+    steps:
     
     - name: Echo Env
       run: |
@@ -32,6 +37,7 @@ jobs:
 
   test_on_merge:
     if: (github.event.action == 'closed' || github.event.pull_request.merged == true)
+    needs: pre-req
     name: Destroy Infra
     runs-on: ubuntu-latest
 
