@@ -86,7 +86,7 @@ jobs:
             terraform workspace select dev-${{ github.head_ref || github.ref_name }} || terraform workspace new dev-${{ github.head_ref || github.ref_name }}
          fi
 
-         terraform plan --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" -auto-approve
+         terraform plan --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
 
   Destroy:
