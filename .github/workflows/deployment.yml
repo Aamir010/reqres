@@ -5,9 +5,8 @@ on:
       - "master"
 
 pull_request:
-  branches:
-    - master
-  types: [opened, synchronize, closed]
+  branches: [ "master" ]
+  #types: [opened, synchronize, closed]
 
 jobs:
   test:
