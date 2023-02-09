@@ -40,11 +40,9 @@ jobs:
         echo ${{ needs.pre-req.outputs.SECRET_ENV }} 
 
     - name: Run a multi-line script
-      env:
-        ACCESS_KEY: ${{ needs.pre-req.outputs.SECRET_ENV }}_ACCESS_KEY
       run: |
-        SECRET_VALUE=${{ secrets[env.ACCESS_KEY] }}
-        echo "SECRET_VALUE = $SECRET_VALUE"
+        var1 = ${{ needs.pre-req.outputs.SECRET_ENV }}
+        echo ${{ var1 }}
       
 
 
