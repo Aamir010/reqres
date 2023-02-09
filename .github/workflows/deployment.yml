@@ -1,0 +1,30 @@
+name: Build
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    types: [opened, synchronize, closed]
+
+jobs:
+  test:
+    if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
+    name: Create Infra
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out code
+      run: |
+        echo "${{github.event}}"
+
+  test_on_merge:
+    if: (github.event.action == 'closed' || github.event.pull_request.merged == true)
+    name: Destroy Infra
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out code
+      run: |
+        echo "${{github.event}}"
