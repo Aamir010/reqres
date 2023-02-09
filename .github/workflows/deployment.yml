@@ -16,3 +16,13 @@ jobs:
     - name: Check out code
       run: |
         echo "${{github.event}}"
+
+  test_on_merge:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out code
+      run: |
+        echo "${{github.event}}"
