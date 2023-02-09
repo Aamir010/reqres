@@ -230,6 +230,8 @@ data "aws_route53_zone" "dns" {
 
 
 resource "aws_route53_record" "jsonmock-CNAME" {
+  depends_on = [aws_ecs_service.jsonmock_service]
+
   zone_id = data.aws_route53_zone.dns.zone_id
   name    = local.fqdn
   type    = "CNAME"
