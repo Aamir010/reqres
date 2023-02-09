@@ -64,19 +64,33 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: reqres
-          IMAGE_TAG: ${{ github.sha }}
-          IMAGE_TAG_LATEST: ${{ 'latest' }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: reqres
+        IMAGE_TAG: ${{ github.sha }}
 
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_LATEST .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
 
+    - name: Terraform plan and apply
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: reqres
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+         if [[ ${{ needs.pre-req.outputs.SECRET_ENV }} == 'PROD' ]]; then
+            terraform workspace new PROD
+         else
+            terraform workspace new dev-${{ github.head_ref || github.ref_name }}
+         fi
+
+         terraform init
+         terraform plan --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
 
   Destroy:
     if: (github.event.action == 'closed' || github.event.pull_request.merged == true)
-    needs: pre-req
+    needs: [pre-req,Deploy]
     name: Destroy Infra
     runs-on: ubuntu-latest
 
