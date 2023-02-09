@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Build image
+    name: Create Infra
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
         echo "${{github.event}}"
 
   test_on_merge:
-    name: Build image
+    name: Destroy Infra
     runs-on: ubuntu-latest
 
     steps:
