@@ -91,7 +91,7 @@ jobs:
 
   Destroy:
     if: (github.event.action == 'closed' || github.event.pull_request.merged == true)
-    needs: [pre-req,Deploy]
+    needs: [pre-req]
     name: Destroy Infra
     runs-on: ubuntu-latest
 
