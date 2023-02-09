@@ -19,10 +19,10 @@ jobs:
 
     - name: Set EnvVar for Secret
       run: |
-        if [[ ${{ github.head_ref || github.ref_name }} == 'test-1' ]]; then
-            echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
-        else
+        if [[ ${{ github.head_ref || github.ref_name }} == 'master' ]]; then
             echo "SECRET_ENV=PROD" >> "$GITHUB_ENV"
+        else
+            echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
         fi   
     
     - name: Echo Env
