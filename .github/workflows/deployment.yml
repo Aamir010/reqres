@@ -41,7 +41,7 @@ jobs:
 
     - name: Run a multi-line script
       run: |
-        echo "SECRET_ENV=PROD" >> "$GITHUB_OUTPUT"
+        echo "SECRET_ENV=PROD" >> "$GITHUB_ENVIRONMENT"
         echo ${{ secrets[format('{0}_A', env.SECRET_ENV)] }}
 
       
