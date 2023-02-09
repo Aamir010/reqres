@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "ecs_sg_allow_from_alb" {
 
 
 resource "aws_alb_target_group" "ecs_service_target_group" {
-  name = "jsonmock-${terraform.workspace}-ecs-tg"
+  name = substr("jsonmock-${terraform.workspace}-ecs-tg", 0, 30)
 
   health_check {
     healthy_threshold   = "3"
