@@ -43,3 +43,7 @@ variable "common_tags" {
     }
   )
 }
+
+variable "assume_role" {
+  type = string
+}

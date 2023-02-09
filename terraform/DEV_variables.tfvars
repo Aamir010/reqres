@@ -25,3 +25,5 @@ common_tags = {
   "ManagedBy"            = "Terraform"
   "Project"              = "Reqres"
 }
+
+assume_role = "arn:aws:iam::563410562074:role/ReqResTerraformRole"
