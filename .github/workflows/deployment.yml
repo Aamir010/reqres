@@ -17,14 +17,16 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Set EnvVar for Secret
-      run: |
-        echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
         
     
     - name: Echo Env
       run: |
-        echo "${{ env.BRANCH }}"
+        echo "${{ steps.extract_branch.outputs.branch }}"
 
 
   test_on_merge:
