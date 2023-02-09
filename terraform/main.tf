@@ -52,7 +52,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_security_group" "alb_sg" {
-  name        = "jsonmock-${terraform.workspace}-alb-sg"
+  name        = substr("jsonmock-${terraform.workspace}-alb-sg", 0, 30)
   description = "Allow inbound traffic"
   vpc_id      = var.vpc_id
 
@@ -85,7 +85,7 @@ resource "aws_security_group_rule" "alb_sg_allow_port_443" {
 }
 
 resource "aws_lb" "jsonmock_alb" {
-  name               = "jsonmock-${terraform.workspace}-alb"
+  name               = substr("jsonmock-${terraform.workspace}-alb", 0, 30)
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
@@ -111,7 +111,7 @@ resource "aws_lb_listener" "jsonmock_alb_listner_80" {
 }
 
 resource "aws_security_group" "ecs_sg" {
-  name        = "jsonmock-${terraform.workspace}-ecs-sg"
+  name        = substr("jsonmock-${terraform.workspace}-ecs-sg", 0, 30)
   description = "Allow inbound traffic from ALB"
   vpc_id      = var.vpc_id
 
@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "ecs_sg_allow_from_alb" {
 
 
 resource "aws_alb_target_group" "ecs_service_target_group" {
-  name = "jsonmock-${terraform.workspace}-ecs-tg"
+  name = substr("jsonmock-${terraform.workspace}-ecs-tg", 0, 30)
 
   health_check {
     healthy_threshold   = "3"
