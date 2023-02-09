@@ -27,3 +27,10 @@ common_tags = {
 }
 
 assume_role = "arn:aws:iam::563410562074:role/ReqResTerraformRole"
+
+autoscaling = {
+  min_capacity       = 1
+  max_capacity       = 2
+  high_cpu_threshold = 80
+  low_cpu_threshold  = 20
+}
