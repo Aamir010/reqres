@@ -4,14 +4,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-# on:
-#   push:
-#     branches:
-#       - "master"
-
-#pull_request:
-#  branches: [ "master" ]
-  #types: [opened, synchronize, closed]
+    types: [opened, synchronize, closed]
 
 jobs:
   test:
