@@ -52,7 +52,7 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_security_group" "alb_sg" {
-  name        = substr("jsonmock-${terraform.workspace}-alb-sg", 0, 30)
+  name        = substr("jsonmock-alb-${terraform.workspace}-sg", 0, 30)
   description = "Allow inbound traffic"
   vpc_id      = var.vpc_id
 
@@ -111,7 +111,7 @@ resource "aws_lb_listener" "jsonmock_alb_listner_80" {
 }
 
 resource "aws_security_group" "ecs_sg" {
-  name        = substr("jsonmock-${terraform.workspace}-ecs-sg", 0, 30)
+  name        = substr("jsonmock-ecs-${terraform.workspace}-sg", 0, 30)
   description = "Allow inbound traffic from ALB"
   vpc_id      = var.vpc_id
 
