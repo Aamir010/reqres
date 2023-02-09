@@ -77,6 +77,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: reqres
         IMAGE_TAG: ${{ github.sha }}
+      id: tfoutput
       run: |
          cd terraform/
          terraform init
@@ -89,7 +90,6 @@ jobs:
          terraform apply --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" -auto-approve
 
          echo "ENDPOINT=$(terraform output dns_name)" >> $GITHUB_OUTPUT
-      id: tf_output
 
       - uses: actions/github-script@v5
         with:
@@ -99,7 +99,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Endpoint is available at https://${{ steps.tf_output.outputs.ENDPOINT }}'
+              body: 'Endpoint is available at https://${{ steps.tfoutput.outputs.ENDPOINT }}'
             })
 
 
