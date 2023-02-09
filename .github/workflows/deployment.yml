@@ -87,7 +87,7 @@ jobs:
          fi
 
          terraform apply --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" -auto-approve
-         echo "ENDPOINT=$(terraform output dns_name)" >> $GITHUB_ENV
+         echo "ENDPOINT=$(terraform output dns_name | tr -d '"')" >> $GITHUB_ENV
 
     - name: Post comment message
       uses: actions/github-script@v5
@@ -98,7 +98,7 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'Endpoint is available'
+            body: 'Endpoint is available at https://${{ env.ENDPOINT }}'
           })
 
 
