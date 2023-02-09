@@ -50,6 +50,8 @@ jobs:
     - name: Echo Env
       run: |
         echo ${{ needs.pre-req.outputs.SECRET_ENV }}
+        echo ${{ needs.pre-req.outputs.ACCESS_KEY }}
+        echo ${{ needs.pre-req.outputs.SECRET_ACCESS_KEY }}
 
       
 
