@@ -14,8 +14,6 @@ jobs:
       SECRET_ENV: ${{ steps.secret-env.outputs.SECRET_ENV }}
 
     steps:
-    # - name: Check out code
-    #   uses: actions/checkout@v3
 
     - name: Set EnvVar for Secret
       id: secret-env
@@ -33,10 +31,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Check out code
+      uses: actions/checkout@v3
     
     - name: Echo Env
       run: |
         echo ${{ needs.pre-req.outputs.SECRET_ENV }} 
+
+    - name: Run a multi-line script
+      env:
+        ACCESS_KEY: ${{ needs.pre-req.outputs.SECRET_ENV }}_ACCESS_KEY
+      run: |
+        SECRET_VALUE=${{ secrets[env.ACCESS_KEY] }}
+        echo "SECRET_VALUE = $SECRET_VALUE"
+      
 
 
   test_on_merge:
