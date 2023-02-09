@@ -41,7 +41,7 @@ jobs:
 
     - name: Run a multi-line script
       run: |
-        var1 = ${{ needs.pre-req.outputs.SECRET_ENV }}
+        var1=${{ needs.pre-req.outputs.SECRET_ENV }}
         echo ${{ var1 }}
       
 
