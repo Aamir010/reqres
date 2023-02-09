@@ -20,8 +20,10 @@ jobs:
             echo "SECRET_ENV=PROD" >> "$GITHUB_ENV"
         else
             echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
-        fi   
-        
+        fi
+      outputs:
+        SECRET_ENV: ${{ env.SECRET_ENV }}
+
   test:
     if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
     needs: pre-req
@@ -32,7 +34,7 @@ jobs:
     
     - name: Echo Env
       run: |
-        echo ${{ env.SECRET_ENV }} 
+        echo ${{ needs.pre-req.outputs.SECRET_ENV }} 
 
 
   test_on_merge:
