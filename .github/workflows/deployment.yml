@@ -9,13 +9,13 @@ pull_request:
     - main
   types: [opened, synchronize, closed]
 
-  jobs:
-    test:
-      name: Build image
-      runs-on: ubuntu-latest
+jobs:
+  test:
+    name: Build image
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
 
-      - name: Check out code
-        run: |
-          echo "First Test"
+    - name: Check out code
+      run: |
+        echo "First Test"
