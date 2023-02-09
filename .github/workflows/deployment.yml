@@ -142,4 +142,4 @@ jobs:
          terraform workspace select $WORKSPACE_NAME || terraform workspace new $WORKSPACE_NAME 
          terraform destroy --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars -auto-approve
 
-         terraform workspace delete $WORKSPACE_NAME
+         terraform workspace select default && terraform workspace delete $WORKSPACE_NAME
