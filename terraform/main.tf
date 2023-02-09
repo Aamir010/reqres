@@ -85,7 +85,7 @@ resource "aws_security_group_rule" "alb_sg_allow_port_443" {
 }
 
 resource "aws_lb" "jsonmock_alb" {
-  name               = "jsonmock-${terraform.workspace}-alb"
+  name               = substr("jsonmock-${terraform.workspace}-alb", 0, 30)
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
