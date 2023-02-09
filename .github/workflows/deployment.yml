@@ -1,11 +1,16 @@
 name: Build
 on:
   push:
-    branches:
-      - "master"
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+# on:
+#   push:
+#     branches:
+#       - "master"
 
-pull_request:
-  branches: [ "master" ]
+#pull_request:
+#  branches: [ "master" ]
   #types: [opened, synchronize, closed]
 
 jobs:
