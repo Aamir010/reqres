@@ -27,7 +27,7 @@ jobs:
     
     - name: Echo Env
       run: |
-        echo ${{ SECRET_ENV }} 
+        echo ${{ env.SECRET_ENV }} 
 
 
   test_on_merge:
