@@ -15,8 +15,20 @@ jobs:
     steps:
 
     - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set EnvVar for Secret
       run: |
-        echo "${{github.event}}"
+        if [[ $BRANCH == 'master' ]]; then
+            echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
+        else
+            echo "SECRET_ENV=PROD" >> "$GITHUB_ENV"
+        fi
+    
+    - name: Echo Env
+      run: |
+        echo "${{ env.SECRET_ENV }}"
+
 
   test_on_merge:
     if: (github.event.action == 'closed' || github.event.pull_request.merged == true)
