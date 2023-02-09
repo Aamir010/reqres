@@ -10,19 +10,21 @@ jobs:
   pre-req:
     name: Setting up pre-req
     runs-on: ubuntu-latest
+    outputs:
+      SECRET_ENV: ${{ steps.secret-env.outputs.SECRET_ENV }}
+
     steps:
     - name: Check out code
       uses: actions/checkout@v2
 
     - name: Set EnvVar for Secret
+      id: secret-env
       run: |
         if [[ ${{ github.head_ref || github.ref_name }} == 'master' ]]; then
-            echo "SECRET_ENV=PROD" >> "$GITHUB_ENV"
+            echo "SECRET_ENV=PROD" >> "$GITHUB_OUTPUT"
         else
-            echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
+            echo "SECRET_ENV=DEV" >> "$GITHUB_OUTPUT"
         fi
-      outputs:
-        SECRET_ENV: ${{ env.SECRET_ENV }}
 
   test:
     if: (!(github.event.action == 'closed' || github.event.pull_request.merged == true))
