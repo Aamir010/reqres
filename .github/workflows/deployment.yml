@@ -84,6 +84,7 @@ jobs:
             terraform workspace new dev-${{ github.head_ref || github.ref_name }}
          fi
 
+         cd terraform/
          terraform init
          terraform plan --var-file ${{ needs.pre-req.outputs.SECRET_ENV }}_variables.tfvars --var image="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
