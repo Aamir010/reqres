@@ -95,10 +95,21 @@ jobs:
     name: Destroy Infra
     runs-on: ubuntu-latest
 
+    env:
+      AWS_ACCESS_KEY_ID_NAME: ${{ needs.pre-req.outputs.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY_NAME: ${{ needs.pre-req.outputs.AWS_SECRET_ACCESS_KEY }}
+
     steps:
 
     - name: Check out code
       uses: actions/checkout@v3
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-access-key-id: ${{ secrets[env.AWS_ACCESS_KEY_ID_NAME] }}
+        aws-secret-access-key: ${{ secrets[env.AWS_SECRET_ACCESS_KEY_NAME] }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Terraform Destroy
       run: |
