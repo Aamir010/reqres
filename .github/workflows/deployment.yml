@@ -17,16 +17,17 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    # - name: Extract branch name
-    #   shell: bash
-    #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-    #   id: extract_branch
-
-        
+    - name: Set EnvVar for Secret
+      run: |
+        if [[ ${{ github.head_ref || github.ref_name }} == 'master' ]]; then
+            echo "SECRET_ENV=DEV" >> "$GITHUB_ENV"
+        else
+            echo "SECRET_ENV=PROD" >> "$GITHUB_ENV"
+        fi   
     
     - name: Echo Env
       run: |
-        echo ${{ github.head_ref || github.ref_name }} 
+        echo ${{ SECRET_ENV }} 
 
 
   test_on_merge:
